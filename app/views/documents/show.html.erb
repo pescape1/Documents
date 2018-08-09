@@ -1,0 +1,22 @@
+<h1>Show Document</h1>
+<p>
+  <strong>Title:</strong>
+  <div class="form-control">
+  	<%= @document.title %>
+  </div>
+</p>
+ 
+<p>
+  <strong>Content:</strong>
+  <div class="form-control">
+	<%= @document.content %>
+  </div>	
+</p>
+
+<p>
+  <strong>Category:</strong>
+  <div class="form-control">
+  	<%= @document.category.name %>
+  </div>
+</p>
+<%= link_to 'Back', documents_path, class: "btn btn-primary" %>

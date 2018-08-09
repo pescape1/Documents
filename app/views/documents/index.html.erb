@@ -1,0 +1,27 @@
+<h1>Listing documents</h1>
+ 
+<div class="btn-group">
+  <%= link_to 'New document', new_document_path, class: "btn btn-primary" %>
+  <%= link_to 'Home', home_index_path, class: "btn btn-default" %>
+</div>
+<table class="table table-striped" style="margin-top: 20px;">
+  <tr>
+    <th>Title</th>
+    <th>Category</th>
+    <th></th>
+  </tr>
+ 
+  <% @documents.each do |document| %>
+    <tr>
+      <td><%= document.title %></td>
+      <td><%= document.category.name %></td>
+      <td>
+        <%= link_to 'Show', document_path(document) %>
+        <%= link_to 'Edit', edit_document_path(document) %>
+        <%= link_to 'Destroy', document_path(document),
+              method: :delete,
+              data: { confirm: 'Are you sure?' } %> 
+      </td>
+    </tr>
+  <% end %>
+</table>

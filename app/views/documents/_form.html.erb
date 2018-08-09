@@ -1,0 +1,34 @@
+<%= form_with model: @document, local: true do |form| %>
+
+  <% if @document.errors.any? %>
+    <div id="error_explanation">
+        <% @document.errors.full_messages.each do |msg| %>
+        	<div class="alert alert-danger">
+          		<li><%= msg %></li>
+      		</div>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <p>
+    <%= form.label :title %><br>
+    <%= form.text_field :title, class: "form-control" %>
+  </p>
+ 
+  <p>
+    <%= form.label :content %><br>
+    <%= form.text_area :content, class: "form-control" %>
+  </p>
+
+  <p>
+    <%= form.label :category_id %><br>
+    
+	<%= form.collection_select(:category_id, @categories, :id, :name, {prompt: "Select a category"}, {class: "form-control"}) %>
+  </p>
+ 
+  <div class="btn-group">
+    <%= form.submit "Save", class: "btn btn-primary" %>
+    <%= link_to 'Back', documents_path, class: "btn btn-default" %>
+  </div>
+<% end %>
