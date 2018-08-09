@@ -4,4 +4,7 @@ class Document < ApplicationRecord
 					  uniqueness: true
 	validates :content, presence: true
   	belongs_to :category
+
+  	scope :getDocumentReferences, -> { where.not(category_id: 3) }
+  	scope :getRecordReferences, -> { where(category_id: 3) }
 end

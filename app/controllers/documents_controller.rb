@@ -11,6 +11,9 @@ class DocumentsController < ApplicationController
 	def new
 		@document = Document.new
 		@categories = Category.all
+		@documentReferences = Document.getDocumentReferences
+		@recordReferences = Document.getRecordReferences
+		@responsibles = Responsible.all
 	end
 
 	def create

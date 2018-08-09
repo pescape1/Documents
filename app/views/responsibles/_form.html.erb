@@ -1,0 +1,27 @@
+<div class="card">
+	<div class="card-body">
+		<%= form_with model: @responsible, local: true do |form| %>
+
+		  <% if @responsible.errors.any? %>
+		    <div id="error_explanation">
+		        <% @responsible.errors.full_messages.each do |msg| %>
+		        	<div class="alert alert-danger">
+		          		<li><%= msg %></li>
+		      		</div>
+		        <% end %>
+		      </ul>
+		    </div>
+		  <% end %>
+
+		  <p>
+		    <%= form.label :name %><br>
+		    <%= form.text_field :name, class: "form-control" %>
+		  </p>
+		 
+		  <div class="btn-group">
+		    <%= form.submit "Save", class: "btn btn-primary" %>
+		    <%= link_to 'Back', documents_path, class: "btn btn-default" %>
+		  </div>
+		<% end %>
+	</div>
+</div>
