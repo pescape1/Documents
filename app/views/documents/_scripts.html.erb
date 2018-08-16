@@ -1,0 +1,239 @@
+<% content_for :scripts do %>
+<script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/tocbot/4.1.1/tocbot.min.js"></script>
+<script type="text/javascript">
+	var Embed = Quill.import('blots/embed');
+	let Block = Quill.import('blots/block');
+	let BlockEmbed = Quill.import('blots/block/embed');
+
+	//var t=false;
+
+	$(document).ready(function() {
+		$("#activity-button").on("click", function(e) {
+			e.preventDefault();
+			t=undefined!=quill.getFormat().list;
+			quill.format('list', !t);
+	  	});
+	  	$('#toc_hide').click(function(e) {
+			coltoc=$(".col_toc");
+			if(coltoc[0].style.display=="none") {
+				coltoc.show();
+			}
+			else {
+				coltoc.hide();
+				//$('.ql-editor')[0].style.width = $('.ql-toolbar')[0].offsetWidth-1+'px';
+			}
+			e.preventDefault();
+		});/**/
+		//$('.ql-editor')[0].style.width = $('.ql-toolbar')[0].offsetWidth-1+'px';
+		s_height = $(window).height() - $('.ql-editor')[0].getBoundingClientRect().top + window.scrollY - 10 +'px';
+		$('.ql-editor')[0].style.height = s_height;
+		$('#toc')[0].style.height = s_height;
+	});
+	$(window).resize(function() {
+		//$('.ql-editor')[0].style.width = $('.ql-toolbar')[0].offsetWidth-1+'px';
+		s_height = $(window).height() - $('.ql-editor')[0].getBoundingClientRect().top + window.scrollY - 10 +'px';
+		$('.ql-editor')[0].style.height = s_height;
+		$('#toc')[0].style.height = s_height;
+		//editor[0].style.width=editor.style.offeditor.style.left;
+		//console.log(editor);
+		//console.log(editor[0].style.left);
+		//console.log(editor[0].style.width);
+	});
+
+/*	   	initDelta = {"ops":
+			[
+				{"insert":"Procedimiento de control de documentos "},
+				{"insert":{"TemplateMarker":{"marker":"[doc_1]","title":"DOC-001"}}},
+				{"insert":" es responsabilidad de "},
+				{"insert":{"TemplateMarker":{"marker":"[res_3]","title":"RES-003"}}},
+				{"insert":" y genera el registro "},
+				{"insert":{"TemplateMarker":{"marker":"[rec_2]","title":"REG-002"}}},
+				{"insert":".\n"}
+			]};
+		quill.setContents(initDelta);
+	});
+*/
+
+
+
+	class TemplateMarker extends Embed {
+	    static create(value) {
+	        let node = super.create(value);
+	        //Set up the badge, and badge colour
+	        switch(value.marker.substr(1, 3)) {
+	        	case 'doc':
+			        node.setAttribute('class', 'btn btn-xs btn-info');
+	        		break;
+	        	case 'rec':
+			        node.setAttribute('class', 'btn btn-xs btn-warning');
+	        		break;
+	        	case 'res':
+			        node.setAttribute('class', 'btn btn-xs btn-success');
+			        break;
+			    default:
+			        node.setAttribute('class', 'btn btn-xs btn-danger');
+		    }
+	        node.setAttribute('data-marker', value.marker);
+
+	        //The marker is the $ rel_table[id] reference
+	        node.setAttribute('data-title', value.title);
+	        //
+	        node.innerHTML = value.title;
+	        //The title is what the user sees in their editor
+	        return node;
+	    }
+		static value(node) {
+	        return {
+	            marker: node.getAttribute('data-marker'),
+	            title: node.getAttribute('data-title'),
+	        };
+	    }
+	}
+	TemplateMarker.blotName = 'TemplateMarker';
+	TemplateMarker.tagName = 'span';
+
+	class ListItemBlot extends Block {
+	  static formats(node) {
+	    return ListItemBlot.tagName.indexOf(node.tagName) + 1;
+	  }
+	}
+	ListItemBlot.blotName = 'list';
+	ListItemBlot.tagName = ['li'];
+
+	Quill.register({
+	    'formats/TemplateMarker': TemplateMarker
+	});
+	Quill.register(ListItemBlot);
+
+/*	var toolbarOptions = [
+		['bold', 'italic', 'underline', 'strike'], 
+		[{ 'header': 1 }, { 'header': 2 }], 
+		[{ 'list': 'ordered'}, { 'list': 'bullet' }],
+		[{ 'indent': '-1'}, { 'indent': '+1' }],
+		[{ 'align': [] }],
+	];
+	var toolbarOptions = [
+	  ['bold', 'italic', 'underline', 'strike'],        // toggled buttons
+	  ['blockquote', 'code-block'],
+
+	  [{ 'header': 1 }, { 'header': 2 }],               // custom button values
+	  [{ 'list': 'ordered'}, { 'list': 'bullet' }],
+	  [{ 'script': 'sub'}, { 'script': 'super' }],      // superscript/subscript
+	  [{ 'indent': '-1'}, { 'indent': '+1' }],          // outdent/indent
+	  [{ 'direction': 'rtl' }],                         // text direction
+
+	  [{ 'size': ['small', false, 'large', 'huge'] }],  // custom dropdown
+	  [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
+
+	  [{ 'color': [] }, { 'background': [] }],          // dropdown with defaults from theme
+	  [{ 'font': [] }],
+	  [{ 'align': [] }],
+
+	  ['clean']                                         // remove formatting button
+	];*/
+
+	var options = {
+	  	modules: {
+	  		//toolbar: toolbarOptions
+		    toolbar: "#toolbar" /*{ 
+		    	toolbarOptions,
+		    	handlers: {
+		    		'list': function(value) {
+		    			if(value=='ordered') {
+							t=undefined!=quill.getFormat().list;
+							quill.format('list', !t);
+		    			}
+		    		}
+		    	}
+				handlers: {
+				    'list': function(value) {
+				    	if(value=='ordered') {
+							this.quill.format('list', t);
+							t=!t;
+				    	} 
+				    }
+				}
+			}*/
+		},
+		placeholder: 'Procedure details...',
+		theme: 'snow'
+	};
+
+
+
+
+
+	var quill = new Quill('#content', options);
+
+   	tocbot.init({
+		// Where to render the table of contents.
+		tocSelector: '#toc',
+		// Where to grab the headings to build the table of contents.
+		contentSelector: '#content',
+		// Which headings to grab inside of the contentSelector element.
+		headingSelector: 'li',
+	});
+
+/*    var vtoc=$("#toc").tocify({ 
+            context: "#content",
+            selectors: "li",
+            autoUpdate: false,
+            history: true,
+
+            hashGenerator: function(text,element) {
+               id=element[0].getAttribute('id');
+               return id;
+            },
+        }).data("toc-tocify");
+
+    function updatetoc(vtoc) {
+	    if((vtoc!=null)) {
+	        var veditor = document.getElementById("content");
+	        //if(ts) { veditor.innerHTML='<ol>'+veditor.innerHTML+'</ol>'; ts=false; }
+	        //var vh1 = veditor.getElementsByTagName("h1");    paso 2
+	        var vh1 = veditor.getElementsByTagName("li");   
+	        for (i=0;i<vh1.length;i++) vh1[i].setAttribute("id", "id_"+ (i+1));
+	        vtoc.update();
+	    }
+	}
+	//t2=true;
+	quill.on('text-change', function(delta, oldDelta, source) {
+        if(t) {
+         updatetoc(vtoc);
+         t=false;
+        }
+        else {
+        	//if(t2) vtoc.update() ;
+   	}});*/
+
+	quill.on('text-change', function(delta, oldDelta, source) {
+		var veditor = document.getElementById("content");
+        var vh1 = veditor.getElementsByTagName("li");   
+        for (i=0;i<vh1.length;i++) vh1[i].setAttribute("id", "id_"+ (i+1));
+        tocbot.refresh();
+   	});
+
+	$('.ql-insertRef').on('change', function() {
+		let range = quill.getSelection(true);
+		quill.insertEmbed(
+		    range.index,
+		    //Insert the TemplateMarker in the same range as the cursor is
+		    'TemplateMarker',
+		    //This is the name of the Embed
+		    {
+				//colour: $(this).find(':selected').data('colour'),
+				marker: $(this).find(':selected').data('marker'),
+				title: $(this).find(':selected').data('title')
+			},
+			//These are the variables to enter
+		);
+		quill.insertText(range.index + 1, ' ', Quill.sources.USER);
+		//Add a space after the marker
+		quill.setSelection(range.index + 2, Quill.sources.SILENT);
+		//Take the cursor to the end of the inserted TemplateMarker
+		$(this).val("");
+		//Reset the dropdown
+	});
+</script>
+<% end %>

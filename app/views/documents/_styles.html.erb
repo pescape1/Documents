@@ -1,0 +1,67 @@
+<% content_for :stylesheets do %>
+<link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
+<link href="https://use.fontawesome.com/releases/v5.2.0/css/all.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tocbot/4.1.1/tocbot.css">
+<style type="text/css">
+.is-active-link {
+	font-weight: 400;
+}
+.ql-container {
+    border-style: none !important;
+}
+.ql-editor {
+    /*height: auto !important;*/
+	border-style: solid;
+	border-color: #ccc;
+	border-width: 1px;
+    min-height: 100px;
+    /*position: fixed;*/
+    width: 100%;
+    position: relative;
+}
+#toc {
+	min-height: 100px;
+	overflow-y: auto;
+	border-style: solid;
+	border-color: #ccc;
+	border-width: 1px;
+}
+.toc-link::before {
+	position: static;
+}
+#toc ol {
+	margin-left: 15px;
+}
+.col_toc div {
+	border-style: solid;
+	border-color: #ccc;
+	border-width: 1px;
+	padding: 10px 15px;
+    /*margin: 0 15px 0 15px;
+    display: block;
+    width: auto;*/
+}
+#content li {
+	font-size: 16px !important;
+	font-weight: bold;
+	margin-left: 10px;
+}
+#content p {
+	margin-left: 10px;
+}
+.ql-editor.ql-blank::before {
+	margin-left: 10px;
+}
+.col_toc {
+/*    display: inline-block; 
+    position: relative; 
+    float: left; */
+    display: block;
+}
+.col_content {
+/*    display: inline-block; 
+    position: relative; */
+    display: block;
+}
+</style>
+<% end %>
