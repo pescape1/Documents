@@ -26,13 +26,13 @@
 				</div>
 				<div class="col-sm-3">
 					<div class="btn-group" style="margin-top: 25px; width: 100%;">
-					    <%= form.submit "Save", class: "btn btn-primary", :style => 'width: 50%;' %>
+					    <%= form.submit "Save", class: "btn btn-primary", id: "save_btn", style: 'width: 50%;'  %>
 					    <%= link_to 'Back', documents_path, class: "btn btn-default", :style => 'width: 50%;' %>
 					</div>
 				</div>
 			</div>
 			<div>
-			    <%= form.text_area :content, { class: "form-control", style: "display: none;" } %>
+			    <%= form.text_area :content, class: "form-control", style: "display: none;" %>
 			</div>
 			<div class="text-center" style="margin: 10px 0 10px 0;"><strong>DOCUMENT EDITOR</strong></div>
 		  	<div class="row" style="margin-bottom: 20px;">
@@ -91,7 +91,7 @@
 	  					<td class="col-sm-4 col_toc" style="vertical-align: top;"><div id="toc"></div></td>
 	  					<td class="col-sm-8">
 							<ol style="padding: 0;">
-								<div id="content"></div>
+								<div id="text_content"></div>
 							</ol>
 	  					</td>
 	  				</tr>

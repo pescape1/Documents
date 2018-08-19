@@ -25,24 +25,33 @@ class DocumentsController < ApplicationController
 			redirect_to documents_path
 		else
 			@categories = Category.all
+			@documentReferences = Document.getDocumentReferences
+			@recordReferences = Document.getRecordReferences
+			@responsibles = Responsible.all
 			render 'new'
 		end
 	end
 
 	def edit
 		@categories = Category.all
+		@documentReferences = Document.getDocumentReferences
+		@recordReferences = Document.getRecordReferences
+		@responsibles = Responsible.all
 		@document = Document.find(params[:id])
 	end
 
 	def update
-	  @document = Document.find(params[:id])
-	  @categories = Category.all
+	  	@document = Document.find(params[:id])
+		@categories = Category.all
+		@documentReferences = Document.getDocumentReferences
+		@recordReferences = Document.getRecordReferences
+		@responsibles = Responsible.all
 	 
-	  if @document.update(document_params)
-	    redirect_to documents_path
-	  else
-	    render 'edit'
-	  end
+	  	if @document.update(document_params)
+	    	redirect_to documents_path
+	  	else
+	    	render 'edit'
+	  	end
 	end
 
 	def destroy
